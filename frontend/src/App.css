@@ -1,0 +1,42 @@
+/* Global styles for the entire application */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f7f7f7;
+}
+
+/* Styles for the header */
+header {
+  background-color: #282c34;
+  padding: 20px;
+  color: white;
+}
+
+/* Styles for the main content */
+main {
+  padding: 20px;
+}
+
+/* Styles for the links */
+a {
+  color: #007BFF;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Component-specific styles */
+.App {
+  text-align: center;
+}
+
+.CreateRoom, .ConnectToRoom, .RoomDetails {
+  margin: 20px auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
