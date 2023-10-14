@@ -12,7 +12,7 @@ function App() {
       <Routes>
         <Route path="/create" element={<CreateRoom />} />
         <Route path="/connect" element={<ConnectToRoom />} />
-        <Route path="/room/:roomId" element={<RoomDetails />} />
+        <Route path="/room/:roomName" element={<RoomDetails />} />
       </Routes>
     </Router>
   );

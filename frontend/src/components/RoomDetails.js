@@ -13,10 +13,15 @@ const RoomDetails = () => {
     try {
       const response = await axios.get(`http://127.0.0.1:8000/messages/${roomName}`);
       const room = response.data;
-      // Sort messages by timestamp (assuming messages have a timestamp property)
-      room.messages.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
-      setRoomInfo(room);
-      setError('');
+      console.log(response);
+      // Ensure messages array is present
+      // if (Array.isArray(room.messages)) {
+      //   room.messages.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+        setRoomInfo(room);
+      //   setError('');
+      // } else {
+      //   setError('Error fetching room details: Invalid data format');
+      // } 
     } catch (error) {
       console.error('Error:', error);
       setError('Error fetching room details.');
@@ -42,16 +47,12 @@ const RoomDetails = () => {
       setError('Message cannot be empty.');
       return;
     }
-
+  
     try {
-      // Assuming you have a postMessage function in your FastAPI application
-      await axios.post(`http://127.0.0.1:8000/messages/${roomName}`, {
-        user: 'User123', // Replace with actual user info
+      await axios.post(`http://127.0.0.1:8000/message/${roomName}`, {
+        user: 'User123',
         content: messageInput,
-        // Add a timestamp if needed: timestamp: new Date().toISOString()
       });
-
-      // Fetch updated messages after posting
       await fetchRoomDetails();
       setError('');
       setMessageInput('');
