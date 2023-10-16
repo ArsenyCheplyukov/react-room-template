@@ -5,11 +5,13 @@ import './App.css';
 import CreateRoom from './components/CreateRoom';
 import ConnectToRoom from './components/ConnectToRoom';
 import RoomDetails from './components/RoomDetails';
+import HomePage from './components/HomePage';
 
 function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<HomePage />} />
         <Route path="/create" element={<CreateRoom />} />
         <Route path="/connect" element={<ConnectToRoom />} />
         <Route path="/room/:roomName" element={<RoomDetails />} />
