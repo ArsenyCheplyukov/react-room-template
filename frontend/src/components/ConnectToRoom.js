@@ -34,25 +34,32 @@ const ConnectToRoom = () => {
         console.error('Error:', error);
         setMessage('Error: Room not found.');
       });
-
   };
 
   return (
-    <div>
-      <h1>Connect to a Room</h1>
-      <input
-        type="text"
-        placeholder="Enter room name"
-        value={roomName}
-        onChange={handleRoomNameChange}
-      />
-      <input
-        type="text"
-        placeholder="Enter your player name"
-        value={playerName}
-        onChange={handlePlayerNameChange}
-      />
-      <button onClick={handleConnect}>Connect</button>
+    <div className="connect-room-container">
+      <div className="connect-room-header">
+        <h1>Connect to a Room</h1>
+      </div>
+      <div className="connect-room-form">
+        <input
+          type="text"
+          placeholder="Enter room name"
+          value={roomName}
+          onChange={handleRoomNameChange}
+          className="connect-room-input"
+        />
+        <input
+          type="text"
+          placeholder="Enter your player name"
+          value={playerName}
+          onChange={handlePlayerNameChange}
+          className="connect-room-input"
+        />
+        <button onClick={handleConnect} className="connect-room-button">
+          Connect
+        </button>
+      </div>
       {message && <p style={{ color: 'red' }}>{message}</p>}
     </div>
   );

@@ -39,14 +39,12 @@ const CreateRoom = () => {
         setSuccessMessage('Room created successfully.');
         // Redirect to the connection to room page
         // Assuming you have a function to handle the redirection
-        // Replace 'redirectToRoom' with your actual function to redirect
         redirectToRoom(roomName, playerName);
       })
       .catch(error => {
         console.error('Error:', error);
         setError('Error creating room. Please try again.');
       });
-
   };
 
   const redirectToRoom = (room_name, player_name) => {
@@ -54,21 +52,29 @@ const CreateRoom = () => {
   };
 
   return (
-    <div>
-      <h1>Create a Room</h1>
-      <input
-        type="text"
-        placeholder="Enter room name"
-        value={roomName}
-        onChange={handleRoomNameChange}
-      />
-      <input
-        type="text"
-        placeholder="Enter your player name"
-        value={playerName}
-        onChange={handlePlayerNameChange}
-      />
-      <button onClick={handleCreateRoom}>Create Room</button>
+    <div className="create-room-container">
+      <div className="create-room-header">
+        <h1>Create a Room</h1>
+      </div>
+      <div className="create-room-form">
+        <input
+          type="text"
+          placeholder="Enter room name"
+          value={roomName}
+          onChange={handleRoomNameChange}
+          className="create-room-input"
+        />
+        <input
+          type="text"
+          placeholder="Enter your player name"
+          value={playerName}
+          onChange={handlePlayerNameChange}
+          className="create-room-input"
+        />
+        <button onClick={handleCreateRoom} className="create-room-button">
+          Create Room
+        </button>
+      </div>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
     </div>

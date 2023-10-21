@@ -1,88 +1,313 @@
-/* Global styles for the entire application */
+/* Global styles */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f3f4f6; /* Updated: Telegram-like background color */
+  background: #2a2a2a; /* Dark background color */
+  color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
 }
 
-.container {
+/* Home container */
+.home-container {
   text-align: center;
+  padding: 20px;
+  background: #3b3b3b; /* Slightly lighter background color */
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  transition: background 0.3s ease-in-out;
+  max-width: 400px;
+  margin: 0 auto;
 }
 
-h1 {
-  color: #4CAF50; /* Updated: Light green color */
+/* Header */
+.header {
+  padding: 20px 0;
 }
 
-.buttons {
+.header h1 {
+  font-size: 2rem;
+  color: #4CAF50; /* Light green color */
+  margin-bottom: 20px;
+}
+
+/* Button container */
+.button-container {
   display: flex;
-  justify-content: space-around;
-  margin-top: 20px;
+  flex-direction: column;
 }
 
-.join-button, .create-button {
+/* Join Room and Create Room buttons */
+.join-button,
+.create-button {
   padding: 15px 30px;
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 1rem;
   font-weight: bold;
+  text-align: center;
+  margin: 10px 0;
+  text-decoration: none;
+  background: #4CAF50; /* Light green color */
+  color: white;
   transition: background-color 0.3s ease-in-out;
 }
 
-.join-button {
-  background-color: #4CAF50; /* Updated: Light green color */
-  color: white;
-}
-
-.join-button:hover {
-  background-color: #45a049; /* Updated: Darker green on hover */
-}
-
-.create-button {
-  background-color: #6F42C1; /* Updated: Violet color */
-  color: white;
-}
-
+.join-button:hover,
 .create-button:hover {
-  background-color: #563d7c; /* Updated: Darker violet on hover */
+  background: #45a049; /* Darker green on hover */
 }
 
-/* Styles for the header */
-header {
-  background-color: #282c34;
-  padding: 20px;
-  color: white;
-}
+/*--------------------------------------------- CREATE ROOM STYLES ----------------------------------------------------*/
 
-/* Styles for the main content */
-main {
-  padding: 20px;
-}
-
-/* Styles for the links */
-a {
-  color: #007BFF;
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-/* Component-specific styles */
-.App {
+.create-room-container {
   text-align: center;
+  padding: 20px;
+  background: #3b3b3b; /* Same slightly lighter background color */
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  transition: background 0.3s ease-in-out;
+  max-width: 400px;
+  margin: 0 auto;
 }
 
-.CreateRoom, .ConnectToRoom, .RoomDetails {
-  margin: 20px auto;
-  padding: 20px;
-  background-color: white;
+.create-room-header {
+  padding: 20px 0;
+}
+
+.create-room-header h1 {
+  font-size: 2rem;
+  color: #4CAF50; /* Light green color */
+  margin-bottom: 20px;
+}
+
+.create-room-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.create-room-input {
+  margin: 10px 0;
+  padding: 15px;
+  border: none;
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  font-size: 1rem;
+}
+
+.create-room-button {
+  padding: 15px 30px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  background: #4CAF50; /* Light green color */
+  color: white;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.create-room-button:hover {
+  background: #45a049; /* Darker green on hover */
+}
+
+
+/* ------------------------------------------------------- JOINING THE ROOM STYLES ------------------------------------------------- */
+/* Styles for the ConnectToRoom component */
+.connect-room-container {
+  text-align: center;
+  padding: 20px;
+  background: #3b3b3b; /* Same slightly lighter background color */
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  transition: background 0.3s ease-in-out;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.connect-room-header {
+  padding: 20px 0;
+}
+
+.connect-room-header h1 {
+  font-size: 2rem;
+  color: #4CAF50; /* Light green color */
+  margin-bottom: 20px;
+}
+
+.connect-room-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.connect-room-input {
+  margin: 10px 0;
+  padding: 15px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+}
+
+.connect-room-button {
+  padding: 15px 30px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  background: #4CAF50; /* Light green color */
+  color: white;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.connect-room-button:hover {
+  background: #45a049; /* Darker green on hover */
+}
+
+/* ------------------------------------------------------------- ROOM STYLE -------------------------------------------------------- */
+
+/* Styles for the RoomDetails component */
+.room-details-container {
+  text-align: center;
+  background: linear-gradient(90deg, #4CAF50, #45a049); /* Gradient background */
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  width: 100%;
+  max-width: 400px;
+  height: 80vh; /* Set fixed height */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Ensure messages fill the container */
+  margin: 0 auto;
+}
+
+.room-details-header {
+  padding: 20px 0;
+}
+
+.room-details-header h1 {
+  font-size: 2rem;
+  color: #6c6c6c; /* White text color */
+  margin-bottom: 20px;
+}
+
+.chat-container {
+  flex: 1; /* Fill available vertical space */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between; /* Space between messages and send menu */
+}
+
+.chat {
+  background: #6c6c6c; /* Light background color */
+  border-radius: 1px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  width: 100%; /* Fixed width */
+  overflow-y: scroll;
+  height: 60vh; /* Set fixed height */
+  color: #333; /* Dark text color */
+
+  /* Scrollbar Styles */
+  scrollbar-width: thin;
+  scrollbar-color: #333 #6c6c6c;
+}
+
+.chat::-webkit-scrollbar {
+  width: 12px; /* Width of vertical scrollbar */
+}
+
+.chat::-webkit-scrollbar-thumb {
+  background-color: #333; /* Color of the thumb */
+  border-radius: 10px;
+}
+
+.chat::-webkit-scrollbar-thumb:hover {
+  background-color: #4CAF50; /* Color of the thumb on hover */
+}
+
+.chat::-webkit-scrollbar-track {
+  background-color: #6c6c6c; /* Color of the track */
+}
+
+.my-message-container,
+.another-message-container {
+  background: #9aff9d; /* Light green color for your messages */
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px;
+  word-break: break-word; /* Allow text to wrap */
+  max-width: 60%; /* Set a fixed width for messages */
+}
+
+.another-message-container {
+  background: #909090; /* Slightly darker green color for other messages */
+}
+
+.my-message,
+.another-message {
+  color: #fff; /* White text color */
+  font-size: 1rem;
+  padding: 5px; /* Add padding to messages for better spacing */
+}
+
+.send-menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  background: #fff; /* White background for send menu */
+}
+
+.input-chat {
+  width: 80%; /* Adjust the input width */
+  padding: 15px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+}
+
+.submit-chat {
+  padding: 15px 30px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  background: #4CAF50; /* Light green color */
+  color: #fff; /* White text color */
+  transition: background-color 0.3s ease-in-out;
+}
+
+.submit-chat:hover {
+  background: #45a049; /* Darker green on hover */
+}
+
+
+/* ---------------------------------------------------------- ADOPTIVE INTERFACE --------------------------------------------------- */
+
+/* Media query for responsiveness */
+@media (max-width: 600px) {
+  .home-container {
+    max-width: 90%;
+  }
+
+  .connect-room-container {
+    max-width: 90%;
+  }
+
+  .create-room-container {
+    max-width: 90%;
+  }
+
+  .room-details-container {
+    max-width: 90%;
+  }
 }
