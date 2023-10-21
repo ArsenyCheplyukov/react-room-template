@@ -1,102 +1,88 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 
-const RoomDetails = () => {
-  const { roomName } = useParams();
-  const [roomInfo, setRoomInfo] = useState(null);
-  const [error, setError] = useState('');
-  const [messageInput, setMessageInput] = useState('');
-  const messagesEndRef = useRef(null);
+function RoomDetails() {
+  const { room_name, client_name } = useParams();
+  const [message, setMessage] = useState('');
+  const [messages, setMessages] = useState([]);
 
-  const fetchRoomDetails = async () => {
-    try {
-      const response = await axios.get(`http://127.0.0.1:8000/messages/${roomName}`);
-      const room = response.data;
-      console.log(response);
-      // Ensure messages array is present
-      // if (Array.isArray(room.messages)) {
-      //   room.messages.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
-        setRoomInfo(room);
-      //   setError('');
-      // } else {
-      //   setError('Error fetching room details: Invalid data format');
-      // } 
-    } catch (error) {
-      console.error('Error:', error);
-      setError('Error fetching room details.');
-    }
-  };
+  const webSocketRef = useRef(null);
 
   useEffect(() => {
-    fetchRoomDetails();
-  }, [roomName]);
+    const url = `ws://localhost:8000/ws/${room_name}/${client_name}`;
+    const ws = new WebSocket(url);
+    webSocketRef.current = ws;
 
-  const handleGetMessages = async () => {
-    try {
-      const response = await axios.get(`http://127.0.0.1:8000/messages/${roomName}`);
-      console.log('Messages:', response.data);
-    } catch (error) {
-      console.error('Error:', error);
-      setError('Error fetching messages.');
+    ws.onopen = () => {
+      console.log('WebSocket connected');
+    };
+
+    ws.onmessage = (e) => {
+      const receivedMessage = JSON.parse(e.data);
+      setMessages((prevMessages) => [...prevMessages, receivedMessage]);
+    };
+
+    return () => {
+      ws.close();
+      webSocketRef.current = null;
+    };
+  }, [room_name, client_name]);
+
+  const sendMessage = () => {
+    const ws = webSocketRef.current;
+    if (ws && ws.readyState === WebSocket.OPEN) {
+      ws.send(JSON.stringify({ message, client_name }));
+      setMessage('');
+    } else {
+      console.log('WebSocket not open.');
     }
   };
-
-  const handlePostMessage = async () => {
-    if (!messageInput) {
-      setError('Message cannot be empty.');
-      return;
-    }
-  
-    try {
-      await axios.post(`http://127.0.0.1:8000/message/${roomName}`, {
-        user: 'User123',
-        content: messageInput,
-      });
-      await fetchRoomDetails();
-      setError('');
-      setMessageInput('');
-    } catch (error) {
-      console.error('Error:', error);
-      setError('Error posting message.');
-    }
-  };
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  useEffect(scrollToBottom, [roomInfo]);
 
   return (
-    <div>
-      <h1>Room Details for Room ID: {roomName}</h1>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      {roomInfo ? (
-        <div>
-          <h2>Room Name: {roomInfo.name}</h2>
-          <button onClick={handleGetMessages}>Get Messages</button>
-          <h3>Messages:</h3>
-          <ul>
-            {roomInfo.messages.map((message, index) => (
-              <li key={index}>{`${message.user}: ${message.content}`}</li>
-            ))}
-          </ul>
-          <div ref={messagesEndRef}></div>
+    <div className="container">
+      <h1>Chat</h1>
+      <h2>Your client id: {client_name}</h2>
+      <div className="chat-container">
+        <div className="chat">
+          {messages.map((value, index) => (
+            <div
+              key={index}
+              className={
+                value.client_name === client_name
+                  ? 'my-message-container'
+                  : 'another-message-container'
+              }
+            >
+              <div
+                className={
+                  value.client_name === client_name
+                    ? 'my-message'
+                    : 'another-message'
+                }
+              >
+                <p className="client">Client id: {value.client_name}</p>
+                <p className="message">
+                  {JSON.parse(value.message).message}
+                </p>
+              </div>
+            </div>
+          ))}
         </div>
-      ) : (
-        <p>Loading room details...</p>
-      )}
-      <div>
-        <textarea
-          value={messageInput}
-          onChange={(e) => setMessageInput(e.target.value)}
-          placeholder="Enter your message"
-        />
-        <button onClick={handlePostMessage}>Post Message</button>
+        <div className="input-chat-container">
+          <input
+            className="input-chat"
+            type="text"
+            placeholder="Chat message ..."
+            onChange={(e) => setMessage(e.target.value)}
+            value={message}
+          />
+          <button className="submit-chat" onClick={sendMessage}>
+            Send
+          </button>
+        </div>
       </div>
     </div>
   );
-};
+}
 
 export default RoomDetails;

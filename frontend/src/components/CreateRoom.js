@@ -1,22 +1,38 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const CreateRoom = () => {
   const [roomName, setRoomName] = useState('');
+  const [playerName, setPlayerName] = useState('');
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+
+  const navigate = useNavigate();
 
   const handleRoomNameChange = (e) => {
     setRoomName(e.target.value);
   };
 
-  const handleCreateRoom = () => {
+  const handlePlayerNameChange = (e) => {
+    setPlayerName(e.target.value);
+  };
+
+  const handleCreateRoom = async () => {
     if (!roomName) {
       setError('Room name cannot be empty.');
       return;
     }
 
-    axios.post('http://localhost:8000/create_room/', { name: String(roomName) })
+    if (!playerName) {
+      setError('Player name cannot be empty.');
+      return;
+    }
+
+    const response = await axios.post('http://localhost:8000/create_room/', {
+      name: String(roomName),
+      creator: String(playerName), // Pass the player's nickname as the creator
+    })
       .then(response => {
         console.log('Response:', response);
         setError(''); // Clear any previous errors
@@ -24,20 +40,17 @@ const CreateRoom = () => {
         // Redirect to the connection to room page
         // Assuming you have a function to handle the redirection
         // Replace 'redirectToRoom' with your actual function to redirect
-        redirectToRoom(roomName);
+        redirectToRoom(roomName, playerName);
       })
       .catch(error => {
         console.error('Error:', error);
         setError('Error creating room. Please try again.');
       });
+
   };
 
-  // Function to handle redirection to the connection to room page
-  const redirectToRoom = (roomName) => {
-    // Redirect to the connection to room page
-    // You can use window.location or your preferred routing mechanism
-    // Replace with the actual route you want to redirect to
-    window.location.href = `/room/${roomName}`;
+  const redirectToRoom = (room_name, player_name) => {
+    navigate(`/room/${room_name}/${player_name}`);
   };
 
   return (
@@ -48,6 +61,12 @@ const CreateRoom = () => {
         placeholder="Enter room name"
         value={roomName}
         onChange={handleRoomNameChange}
+      />
+      <input
+        type="text"
+        placeholder="Enter your player name"
+        value={playerName}
+        onChange={handlePlayerNameChange}
       />
       <button onClick={handleCreateRoom}>Create Room</button>
       {error && <p style={{ color: 'red' }}>{error}</p>}

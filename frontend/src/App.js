@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
 import './App.css';
 import CreateRoom from './components/CreateRoom';
 import ConnectToRoom from './components/ConnectToRoom';
@@ -14,7 +13,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/create" element={<CreateRoom />} />
         <Route path="/connect" element={<ConnectToRoom />} />
-        <Route path="/room/:roomName" element={<RoomDetails />} />
+        <Route path="/room/:room_name/:client_name" element={<RoomDetails />} />
       </Routes>
     </Router>
   );

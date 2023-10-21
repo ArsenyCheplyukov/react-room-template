@@ -1,15 +1,28 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "FastApi",
+            "cwd": "${workspaceFolder}/backend", // Add this to set the current working directory to the /backend folder
+            "type": "python",
+            "request": "launch",
+            "module": "uvicorn",
+            "args": ["app:app","--reload"],
+        },
+        {
+            "name": "React",
             "type": "chrome",
             "request": "launch",
-            "name": "Launch Chrome against localhost",
             "url": "http://localhost:3000",
             "webRoot": "${workspaceFolder}/frontend"
+        },
+    ],
+    "compounds": [
+        {
+            "name": "FastApi/React",
+            "configurations": ["FastApi", "React"],
+        //   "preLaunchTask": "${defaultBuildTask}",
+            "stopAll": true
         }
     ]
 }
